@@ -15,11 +15,11 @@ while(<IN>){
 	my $pcrKey = $fwdpcr."_".$revpcr."\t";
 	if(! defined $uniqueBarcodePCRDupTracker{$key}){
 		$uniqueBarcodeCounter{$key} = 1;
-		$uniqueBarcodePCRDupTracker{$key} = "\t".$pcrKey."\t";
+		$uniqueBarcodePCRDupTracker{$key} = "\t".$pcrKey;
 	}else{
-		next if $uniqueBarcodePCRDupTracker{$key} =~ "\t$pcrKey\t";
+		next if $uniqueBarcodePCRDupTracker{$key} =~ "\t$pcrKey";
 		$uniqueBarcodeCounter{$key} ++;
-		$uniqueBarcodePCRDupTracker{$key} .= $pcrKey."\t";
+		$uniqueBarcodePCRDupTracker{$key} .= $pcrKey;
 	}
 }
 close(IN);
