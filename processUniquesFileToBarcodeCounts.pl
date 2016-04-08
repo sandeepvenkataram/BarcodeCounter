@@ -58,7 +58,7 @@ my %duplicateMapper = ();
 
 foreach my $line(@kdLines){
 	$line = substr($line,1,-2);
-	my @split = split(", ",$line);
+	my @split = split("\t",$line);
 	#print $line."\n";
 	#print join("\t",@split)."\n";
 	#exit;
@@ -178,3 +178,5 @@ foreach my $i(sort keys %outputHash){
 	}
 }
 close(OUT);
+
+system "/hsgs/projects/petrov/perlroot/perl/bin/perl condenseCounts.pl $dir"."barcodeCounts.tab >$dir"."condensedBarcodeCounts.tab";
