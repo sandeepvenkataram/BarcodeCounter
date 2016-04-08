@@ -15,7 +15,7 @@ use warnings;
 
 my $blastn = "/hsgs/projects/petrov/software/ncbi-blast-2.2.28+/bin/blastn";
 my $barcodeDb = "/hsgs/projects/petrov/sandeep/EvolutionData/consensus_tags_paper.fa";
-my $knownDuplicates = "/home/sandeep/Research/PetrovLab/BarcodeCounter/knownDuplicateBarcodes.txt";
+my $knownDuplicates = "/hsgs/projects/petrov/sandeep/FitnessAssayData/BarcodeCounter/knownDuplicateBarcodes.txt";
 ###################################################################################################################
 
 
@@ -57,14 +57,17 @@ close(KD);
 my %duplicateMapper = ();
 
 foreach my $line(@kdLines){
-	$line = substr($line,1,length($line)-1);
+	$line = substr($line,1,-2);
 	my @split = split(", ",$line);
-	foreach my $j(1..scalar(@split)-1){
-		$duplicateMapper{$split[$j]} = $split[0];
+	#print $line."\n";
+	#print join("\t",@split)."\n";
+	#exit;
+	foreach my $j(@split){
+		$duplicateMapper{$j} = $split[0];
 	}
 }
 
-
+my $numBarcodesRenamed = 0;
 #for every uniques file
 foreach my $uniquesFile (@docs) {
 
@@ -110,6 +113,7 @@ foreach my $uniquesFile (@docs) {
 		my $barcode = $split[1];
 		if(defined $duplicateMapper{$barcode}){
 			$barcode = $duplicateMapper{$barcode};
+			$numBarcodesRenamed++;
 		}
 		my $evalue = $split[10];
 		if($currentQuery eq ""){ #if we are in the initialization step, initialize
@@ -163,6 +167,7 @@ foreach my $uniquesFile (@docs) {
 	}
 	$currentIndent .= "0\t";
 }
+print "\nNum Renamed Barcodes $numBarcodesRenamed\n\n";
 #write data to file
 open(OUT, ">".$dir."barcodeCounts.tab");
 print OUT "barcode\t".join("\t",@sampleNames)."\n";
