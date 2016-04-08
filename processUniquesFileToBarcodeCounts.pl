@@ -178,7 +178,7 @@ foreach my $i(sort keys %outputHash){
 }
 close(OUT);
 
-system "/hsgs/projects/petrov/perlroot/perl/bin/perl condenseCounts.pl $dir"."barcodeCounts.tab >$dir"."condensedBarcodeCounts.tab";
+system "/hsgs/projects/petrov/perlroot/perl/bin/perl /hsgs/projects/petrov/sandeep/FitnessAssayData/BarcodeCounter/condenseCounts.pl $dir"."barcodeCounts.tab >$dir"."condensedBarcodeCounts.tab";
 
 
 sub trim

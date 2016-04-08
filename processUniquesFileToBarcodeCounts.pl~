@@ -179,3 +179,12 @@ foreach my $i(sort keys %outputHash){
 close(OUT);
 
 system "/hsgs/projects/petrov/perlroot/perl/bin/perl condenseCounts.pl $dir"."barcodeCounts.tab >$dir"."condensedBarcodeCounts.tab";
+
+
+sub trim
+{
+	my $string = shift;
+	$string =~ s/^\s+//;
+	$string =~ s/\s+$//;
+	return $string;
+}
