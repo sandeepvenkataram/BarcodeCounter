@@ -57,8 +57,7 @@ close(KD);
 my %duplicateMapper = ();
 
 foreach my $line(@kdLines){
-	$line = substr($line,1,-2);
-	my @split = split(", ",$line);
+	my @split = split("\t",trim($line));
 	#print $line."\n";
 	#print join("\t",@split)."\n";
 	#exit;
