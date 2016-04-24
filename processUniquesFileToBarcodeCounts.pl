@@ -13,9 +13,9 @@ use warnings;
 
 ################################### Hardcoded software and input directories #####################################
 
-my $blastn = "/hsgs/projects/petrov/software/ncbi-blast-2.2.28+/bin/blastn";
-my $barcodeDb = "/hsgs/projects/petrov/sandeep/EvolutionData/consensus_tags_paper.fa";
-my $knownDuplicates = "/hsgs/projects/petrov/sandeep/FitnessAssayData/BarcodeCounter/knownDuplicateBarcodes.txt";
+my $blastn = "blastn";
+my $barcodeDb = "consensus_tags_paper.fa";
+my $knownDuplicates = "knownDuplicateBarcodes.txt";
 ###################################################################################################################
 
 

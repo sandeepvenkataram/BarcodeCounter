@@ -1,55 +1,23 @@
 # Sandeep Venkataram
 # Petrov Lab | Stanford University
-# March 18th, 2016
+# April 23rd, 2016
 # Pipeline to get barcode counts from Illumina fastq data.
 # This pipeline is set up to run on the Stanford Proclus Cluster, you will need to modify software directories to run it on your own system
 # The pipeline expects each lane to be processed in its own directory. 
 # Each directory should contain a sampleIndexFile.txt file, which is a tab-delimited file with 3 columns and no header
-#  The first column is the sample name (e.g. 7-2-1 for batch 7, timepoint 2, replicate 1), the second and third are the primer names used to index the sample (e.g. P104 and P109)
+# The first column is the sample name (e.g. 7-2-1 for batch 7, timepoint 2, replicate 1), the second and third are the primer names used to index the sample (e.g. P104 and P109)
 
 
 #!/hsgs/projects/petrov/perlroot/perl/bin/perl
-
-#below is the run commands that I used for our data
-=pog
-#run for expts 1 to 3
-qsub -b y -pe orte 12 /hsgs/projects/petrov/perlroot/perl/bin/perl /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/countBarcodesByMapping.pl -si /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts1to3/sampleIndexFile.txt -ft /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/forwardTags.fasta -rt /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/reverseTags.fasta -forwardReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceFwd.fasta -reverseReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceRev.fasta -r1 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts1to3/Yeast-01_1.fastq.gz -r2 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts1to3/Yeast-01_2.fastq.gz -p 11 -odir /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts1to3/
-
-#run for expts 4 to 5
-qsub -b y -pe orte 12 /hsgs/projects/petrov/perlroot/perl/bin/perl /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/countBarcodesByMapping.pl -si /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts4to5/sampleIndexFile.txt -ft /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/forwardTags.fasta -rt /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/reverseTags.fasta -forwardReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceFwd.fasta -reverseReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceRev.fasta -r1 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts4to5/150416_PINKERTON_0356_BC6CJNACXX_L4_1_pf.fastq.gz -r2 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts4to5/150416_PINKERTON_0356_BC6CJNACXX_L4_2_pf.fastq.gz -p 11 -odir /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts4to5/
-
-#run for expts 6 to 8
-qsub -b y -pe orte 12 /hsgs/projects/petrov/perlroot/perl/bin/perl /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/countBarcodesByMapping.pl -si /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts6to8/sampleIndexFile.txt -ft /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/forwardTags.fasta -rt /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/reverseTags.fasta -forwardReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceFwd.fasta -reverseReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceRev.fasta -r1 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts6to8/150423_MARPLE_0302_BC6B58ACXX_L6_1_pf.fastq.gz -r2 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts6to8/150423_MARPLE_0302_BC6B58ACXX_L6_2_pf.fastq.gz -p 11 -odir /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts6to8/
-
-#run for expts 6 to 8 no spike in
-qsub -b y -pe orte 12 /hsgs/projects/petrov/perlroot/perl/bin/perl /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/countBarcodesByMapping.pl -si /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts6to8noSpikeIn/sampleIndexFile.txt -ft /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/forwardTags.fasta -rt /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/reverseTags.fasta -forwardReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceFwd.fasta -reverseReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceRev.fasta -r1 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts6to8noSpikeIn/150423_MARPLE_0302_BC6B58ACXX_L7_1_pf.fastq.gz -r2 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts6to8noSpikeIn/150423_MARPLE_0302_BC6B58ACXX_L7_2_pf.fastq.gz -p 11 -odir /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts6to8noSpikeIn/
-
-#run for expts 13 to 15 with 16 and 17 undigested
-qsub -b y -pe orte 12 /hsgs/projects/petrov/perlroot/perl/bin/perl /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/countBarcodesByMapping.pl -si /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts13to15with16and17undigested/sampleIndexFile.txt -ft /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/forwardTags.fasta -rt /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/reverseTags.fasta -forwardReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceFwd.fasta -reverseReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceRev.fasta -r1 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts13to15with16and17undigested/150814_BRISCOE_0251_BC7LJDACXX_L2_1_pf.fastq.gz -r2 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts13to15with16and17undigested/150814_BRISCOE_0251_BC7LJDACXX_L2_2_pf.fastq.gz -p 11 -odir /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts13to15with16and17undigested/
-
-#run for expts 16 to 17 with 13 to 15 undigested
-qsub -b y -pe orte 12 /hsgs/projects/petrov/perlroot/perl/bin/perl /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/countBarcodesByMapping.pl -si /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts16to17with13to15undigested/sampleIndexFile.txt -ft /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/forwardTags.fasta -rt /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/reverseTags.fasta -forwardReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceFwd.fasta -reverseReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceRev.fasta -r1 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts16to17with13to15undigested/150814_BRISCOE_0251_BC7LJDACXX_L3_1_pf.fastq.gz -r2 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts16to17with13to15undigested/150814_BRISCOE_0251_BC7LJDACXX_L3_2_pf.fastq.gz -p 11 -odir /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts16to17with13to15undigested/
-
-#run for expts 16 to 19 pool (really just expts 18 and 19)
-qsub -b y -pe orte 12 /hsgs/projects/petrov/perlroot/perl/bin/perl /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/countBarcodesByMapping.pl -si /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts16to19pool/sampleIndexFile.txt -ft /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/forwardTags.fasta -rt /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/reverseTags.fasta -forwardReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceFwd.fasta -reverseReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceRev.fasta -r1 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts16to19pool/151015_MARPLE_0336_BC7EU8ACXX_L4_1_pf.fastq.gz -r2 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts16to19pool/151015_MARPLE_0336_BC7EU8ACXX_L4_2_pf.fastq.gz -p 11 -odir /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts16to19pool/
-
-#run for Expts 20-21-23
-qsub -b y -pe orte 12 /hsgs/projects/petrov/perlroot/perl/bin/perl /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/countBarcodesByMapping.pl -si /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts20-21-23/sampleIndexFile.txt -ft /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/forwardTags.fasta -rt /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/reverseTags.fasta -forwardReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceFwd.fasta -reverseReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceRev.fasta -r1 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts20-21-23/160127_TENNISON_0406_BC8C2DACXX_L7_1_pf.fastq.gz -r2 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts20-21-23/160127_TENNISON_0406_BC8C2DACXX_L7_2_pf.fastq.gz -p 11 -odir /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts20-21-23/
-
-
-#run for expts 25 to 27
-qsub -b y -pe orte 12 /hsgs/projects/petrov/perlroot/perl/bin/perl /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/countBarcodesByMapping.pl -si /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts25to27/sampleIndexFile.txt -ft /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/forwardTags.fasta -rt /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/reverseTags.fasta -forwardReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceFwd.fasta -reverseReference /hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/referenceRev.fasta -r1 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts25to27/160122_LYNLEY_0532_BC88VCACXX_L4_1_pf.fastq.gz -r2 /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts25to27/160122_LYNLEY_0532_BC88VCACXX_L4_2_pf.fastq.gz -p 11 -odir /hsgs/projects/petrov/sandeep/FitnessAssayData/Expts25to27/
-
-=cut
 
 use strict;
 use warnings;
 
 ################################### Hardcoded software and output directories #####################################
-
+################################### CHANGE THESE FOR YOUR LOCAL ENVIRONMENT   #####################################
 my $localDir = "/hsgs/projects/petrov/sandeep/FitnessAssayData/bowtiePipeline/";
 my $bowtieDir = "/hsgs/projects/petrov/software/bowtie2/";
-my $perl = "/hsgs/projects/petrov/perlroot/perl/bin/perl";
+my $perl = "perl";
 
 ###################################################################################################################
 
@@ -144,6 +112,11 @@ if($generateUniqueCounts){
 sub compute_uniques_from_barcodes{
 	foreach my $sampleKey(keys %outputStringBuffer){
 		my $samplePrefix = $dataOutputDirectory."sample_$sampleKey";
+		
+		
+		
+		# ###################################### This line is set up for Gridengine job submission on a compute cluster. ############################ 
+		# ###################################### Change this to run on your specific compute environment                 ############################
 		system "qsub -b y $perl $localDir"."findUniquesFromBarcodes.pl $samplePrefix";
 	}
 }
@@ -166,11 +139,8 @@ sub read_sample_index_file{
 }
 
 sub run_bowtie_commands{
-#	&system_call($bowtieDir."bowtie2-build $forwardTagsFile $fwdTagName");
-#	&system_call($bowtieDir."bowtie2-build $reverseTagsFile $revTagName");
 
-
-
+	#map raw reads to identify the sample
 
 	&system_call($bowtieDir."bowtie2 -p $numThreads --reorder --sensitive-local -x $fwdTagName -U $forwardReadsFile -S $fwdTagsSamFile");
 	&system_call($bowtieDir."bowtie2 -p $numThreads --reorder --sensitive-local -x $revTagName -U $reverseReadsFile -S $revTagsSamFile");
