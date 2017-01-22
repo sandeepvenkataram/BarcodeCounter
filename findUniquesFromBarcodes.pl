@@ -11,7 +11,7 @@ open(IN,$barcodeFilePrefix.".barcodes");
 while(<IN>){
 	chomp;
 	my ($fwd,$rev,$fwdpcr,$revpcr) = split("\t",$_);
-	my $key = $fwd;
+	my $key = $fwd."_".$rev;
 	my $pcrKey = $fwdpcr."_".$revpcr."\t";
 	if(! defined $uniqueBarcodePCRDupTracker{$key}){
 		$uniqueBarcodeCounter{$key} = 1;
