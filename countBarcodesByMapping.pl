@@ -141,7 +141,8 @@ sub read_sample_index_file{
 sub run_bowtie_commands{
 
 	#map raw reads to identify the sample
-
+	&system_call($bowtieDir."bowtie2-build $forwardTagsFile $fwdTagName");
+	&system_call($bowtieDir."bowtie2-build $reverseTagsFile $revTagName");
 	&system_call($bowtieDir."bowtie2 -p $numThreads --reorder --sensitive-local -x $fwdTagName -U $forwardReadsFile -S $fwdTagsSamFile");
 	&system_call($bowtieDir."bowtie2 -p $numThreads --reorder --sensitive-local -x $revTagName -U $reverseReadsFile -S $revTagsSamFile");
 
