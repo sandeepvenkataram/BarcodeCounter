@@ -1,6 +1,11 @@
 # BarcodeCounter
 Scripts to count number of reads from each barcode in barcode sequencing data. Initially published with Venkataram and Dunn et al. (2016).
 
+DEPRECATED - all of the functionality for this package (and more) has been included in version 2 of this software. Please find BarcodeCounter2 at https://github.com/sandeepvenkataram/BarcodeCounter2.
+
+
+
+
 The first script that needs to be used is countBarcodesByMapping.pl. 
 Please change lines 18-20, 52-55 and 120 to conform to your specific computing environment.
 
